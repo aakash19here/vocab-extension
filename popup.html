@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Vocab → Notion</title>
+    <link rel="stylesheet" href="src/ui.css" />
+    <style>
+      body {
+        width: 340px;
+      }
+
+      header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+        padding: 12px 14px 10px;
+        border-bottom: 1px solid var(--border);
+      }
+
+      header h1 {
+        font-size: 14px;
+      }
+
+      #target {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 11.5px;
+        color: var(--text-muted);
+        margin-top: 2px;
+        max-width: 220px;
+      }
+
+      #target span {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      main {
+        padding: 12px 14px;
+        display: grid;
+        gap: 10px;
+      }
+
+      #pending {
+        display: none;
+        align-items: center;
+        gap: 8px;
+        padding: 7px 9px;
+        font-size: 12px;
+        background: color-mix(in srgb, var(--warn) 12%, transparent);
+        border: 1px solid color-mix(in srgb, var(--warn) 35%, transparent);
+        border-radius: var(--radius);
+      }
+
+      #pending strong {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      #pending.show {
+        display: flex;
+      }
+
+      .field label {
+        font-size: 12px;
+      }
+
+      .actions {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+      }
+
+      .hint {
+        font-size: 11px;
+        color: var(--text-muted);
+      }
+
+      section.recent {
+        border-top: 1px solid var(--border);
+        padding: 10px 14px 12px;
+      }
+
+      section.recent header {
+        border: none;
+        padding: 0 0 6px;
+      }
+
+      section.recent h2 {
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        color: var(--text-muted);
+      }
+
+      ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: grid;
+        gap: 6px;
+        max-height: 148px;
+        overflow-y: auto;
+      }
+
+      li {
+        display: flex;
+        gap: 8px;
+        align-items: baseline;
+        font-size: 12px;
+      }
+
+      li .word {
+        font-weight: 600;
+        white-space: nowrap;
+      }
+
+      li .meaning {
+        color: var(--text-muted);
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        flex: 1;
+      }
+
+      li time {
+        color: var(--text-muted);
+        font-size: 11px;
+        white-space: nowrap;
+      }
+
+      footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 8px 14px;
+        border-top: 1px solid var(--border);
+        font-size: 11.5px;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div>
+        <h1>Vocab → Notion</h1>
+        <div id="target"><i class="dot"></i><span>Checking…</span></div>
+      </div>
+      <button id="open-options" class="link" title="Settings">Settings</button>
+    </header>
+
+    <main>
+      <div id="pending">
+        <i class="dot warn"></i>
+        <strong id="pending-word"></strong>
+        <span class="muted">waiting for a meaning</span>
+        <button id="pending-clear" class="link" style="margin-left: auto">Forget</button>
+      </div>
+
+      <div class="field">
+        <label for="word">Word</label>
+        <input id="word" type="text" placeholder="ubiquitous" autocomplete="off" spellcheck="false" />
+      </div>
+
+      <div class="field">
+        <label for="meaning">Meaning</label>
+        <textarea id="meaning" placeholder="present, appearing, or found everywhere"></textarea>
+      </div>
+
+      <label class="checkbox">
+        <input id="include-source" type="checkbox" checked />
+        <span>Link the page I found it on <span id="source-title" class="muted"></span></span>
+      </label>
+
+      <div class="actions">
+        <span id="status" class="status"></span>
+        <button id="save" class="primary">Save to Notion</button>
+      </div>
+      <div class="hint">Tip: select text on a page, right-click → Save to Notion.</div>
+    </main>
+
+    <section class="recent">
+      <header>
+        <h2>Recent</h2>
+        <button id="clear-history" class="link">Clear</button>
+      </header>
+      <ul id="history"></ul>
+      <p id="history-empty" class="muted" style="font-size: 12px">Nothing saved yet.</p>
+    </section>
+
+    <footer>
+      <a id="open-notion" href="#" target="_blank" rel="noreferrer">Open Notion page ↗</a>
+      <span class="muted">⌘⇧Y / Ctrl+Shift+Y</span>
+    </footer>
+
+    <script type="module" src="src/popup.js"></script>
+  </body>
+</html>
