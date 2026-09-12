@@ -1,0 +1,12 @@
+{
+  "name": "vocab-notion-extension",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Chrome extension that saves words and their meanings to a Notion page.",
+  "type": "module",
+  "scripts": {
+    "test": "node --test tests/",
+    "icons": "node tools/make-icons.mjs",
+    "zip": "rm -f vocab-notion.zip && zip -r vocab-notion.zip manifest.json popup.html options.html src icons -x '*.DS_Store'"
+  }
+}
